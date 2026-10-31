@@ -1,8 +1,21 @@
-# Hermes Agent — 中国大陆安装脚本
+# Hermes Agent — 中国大陆 Windows 安装脚本（PowerShell）
 
 给 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 官方的 Windows 安装器换一套国内下载源。
 
+**Windows + PowerShell 专用**，不是 bash 版，不是跨平台通用脚本。
+
 **只改下载地址，不碰安装逻辑。** 官方的产物锁定、sha256 校验、失败回退顺序全部原样保留 —— 那部分本来就是对的。
+
+---
+
+## 平台要求
+
+- **Windows 10 / 11**（x64 或 arm64）
+- **Windows PowerShell 5.1** 或 PowerShell 7
+- 不需要管理员权限
+
+> **macOS / Linux / WSL 用不上这个** —— 那些平台请用官方 `install.sh`。
+> 这个脚本存在的唯一理由，是 Windows 安装器里写死的那些境外下载地址。
 
 ---
 
@@ -45,9 +58,26 @@
 
 ## 用法
 
+**1. 下载脚本**（在 PowerShell 里）：
+
+```powershell
+cd $HOME\Downloads
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/zhangyu921/hermes-cn-install/main/install-cn.ps1 -OutFile install-cn.ps1
+```
+
+**2. 运行**：
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install-cn.ps1
 ```
+
+或者一行搞定（下载后立刻运行）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.com/zhangyu921/hermes-cn-install/main/install-cn.ps1 -OutFile $env:TEMP\hermes-cn.ps1; & $env:TEMP\hermes-cn.ps1"
+```
+
+> `-ExecutionPolicy Bypass` 只对这一次进程生效，不改系统设置。
 
 ### 参数
 
@@ -63,6 +93,12 @@ powershell -ExecutionPolicy Bypass -File .\install-cn.ps1
 ```powershell
 # 关掉当前终端，开一个新的（PATH 在启动时读取）
 hermes
+```
+
+第一次用要先配置：
+
+```powershell
+hermes setup
 ```
 
 ---
