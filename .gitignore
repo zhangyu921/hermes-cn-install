@@ -1,0 +1,5 @@
+# 临时脚本与本机状态（不进版本库）
+*.log
+*.tmp
+patched*.ps1
+install-run*.log
